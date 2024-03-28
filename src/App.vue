@@ -1,47 +1,55 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import ExhaustiveCheck from './components/ExhaustiveCheck.vue'
+
+type CardAType = {
+  type: 'A'
+  id: number
+  name: string
+}
+type CardBType = {
+  type: 'B'
+  id: number
+  label: string
+}
+type CardCType = {
+  type: 'C'
+  id: number
+  title: string
+}
+type Card = CardAType | CardBType | CardCType
+
+const cards: Card[] = [
+  {
+    type: 'A',
+    id: 0,
+    name: 'Card A'
+  },
+  {
+    type: 'B',
+    id: 1,
+    label: 'Card B'
+  },
+  {
+    type: 'C',
+    id: 2,
+    title: 'Card C'
+  }
+]
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div v-for="card in cards" :key="card.id">
+    <div v-if="card.type === 'A'">
+      {{ card.name }}
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <div v-else-if="card.type === 'B'">
+      {{ card.label }}
+    </div>
+    <div v-else-if="card.type === 'C'">
+      {{ card.title }}
+    </div>
+    <div v-else>
+      <ExhaustiveCheck :check="card" />
+    </div>
+  </div>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
